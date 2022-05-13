@@ -29,7 +29,7 @@
            RECORD CONTAINS 8 CHARACTERS
            BLOCK  CONTAINS 1 RECORDS
            LABEL RECORDS ARE OMITTED
-           DATA RECORD IS INREC2.
+           DATA RECORD IS INREC1.
        01  INREC1              PIC X(8).
 
        FD  INFILE2

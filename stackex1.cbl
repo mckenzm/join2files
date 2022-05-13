@@ -81,7 +81,7 @@
 
 
        20-LOOP.
-           MOVE  INREC2  TO SZ-2ND-HALF
+           MOVE  INREC2  TO   SZ-2ND-HALF
            WRITE OUTREC  FROM SZ-JOINED-RECORD
            READ  INFILE2 INTO SZ-2ND-HALF
               AT END MOVE 'Y' TO END-OF-FILE-IND.

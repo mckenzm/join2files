@@ -20,7 +20,6 @@
            SELECT INFILE2 ASSIGN TO UT-S-INFIL2.
            SELECT OUTFILE ASSIGN TO UT-S-OUTFIL.
 
-
        DATA DIVISION.
       *--------------*
        FILE SECTION.
@@ -30,7 +29,7 @@
            BLOCK  CONTAINS 1 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS INREC1.
-       01  INREC1              PIC X(8).
+       01  INREC1                 PIC X(8).
 
        FD  INFILE2
            RECORDING MODE IS F
@@ -38,7 +37,7 @@
            BLOCK  CONTAINS 100 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS INREC2.
-       01  INREC2              PIC X(8).
+       01  INREC2                 PIC X(8).
 
        FD  OUTFILE
            RECORDING MODE IS F
@@ -46,7 +45,7 @@
            BLOCK  CONTAINS  50 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS OUTREC.
-       01  OUTREC              PIC X(16).
+       01  OUTREC                 PIC X(16).
 
 
        WORKING-STORAGE SECTION.
@@ -74,14 +73,13 @@
            OPEN INPUT  INFILE1 INFILE2
            OPEN OUTPUT OUTFILE
            READ INFILE1 INTO SZ-1ST-HALF AT END PERFORM 30-FINISH.
-           READ INFILE2 AT END PERFORM 30-FINISH.
+           READ INFILE2 INTO SZ-2ND-HALF AT END PERFORM 30-FINISH.
 
        10-EXIT.
            EXIT.
 
 
        20-LOOP.
-           MOVE  INREC2  TO   SZ-2ND-HALF
            WRITE OUTREC  FROM SZ-JOINED-RECORD
            READ  INFILE2 INTO SZ-2ND-HALF
               AT END MOVE 'Y' TO END-OF-FILE-IND.

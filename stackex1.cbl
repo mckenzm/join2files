@@ -64,20 +64,14 @@
       *-------------------*
        00-MAINLINE.
            PERFORM 10-SETUP THROUGH 10-EXIT
-           PERFORM 20-LOOP THROUGH 20-EXIT
-              UNTIL SW-END-OF-FILE.
+           PERFORM 20-LOOP  THROUGH 20-EXIT UNTIL SW-END-OF-FILE.
            PERFORM 30-FINISH.
 
       *                          ANS COBOL (1972) NO FILE STATUS.
        10-SETUP.
-           OPEN INPUT INFILE1 INFILE2
-           OPEN OUTPUT OUTFILE
-           READ INFILE1 INTO SC-1ST-HALF
-           AT END
-              PERFORM 30-FINISH.
-           READ INFILE2 INTO SC-2ND-HALF
-           AT END
-              PERFORM 30-FINISH.
+           OPEN INPUT INFILE1 INFILE2 OUTPUT OUTFILE
+           READ INFILE1 INTO SC-1ST-HALF AT END PERFORM 30-FINISH.
+           READ INFILE2 INTO SC-2ND-HALF AT END PERFORM 30-FINISH.
 
        10-EXIT.
            EXIT.
@@ -86,8 +80,7 @@
        20-LOOP.
            WRITE OUTREC FROM SC-JOINED-RECORD
            READ INFILE2 INTO SC-2ND-HALF
-           AT END
-              MOVE 'Y' TO END-OF-FILE-IND.
+             AT END MOVE 'Y' TO END-OF-FILE-IND.
 
        20-EXIT.
            EXIT.

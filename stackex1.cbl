@@ -29,7 +29,7 @@
            BLOCK  CONTAINS 1 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS INREC1.
-       01  INREC1                 PIC X(8).
+       01  INREC1                PIC X(8).
 
        FD  INFILE2
            RECORDING MODE IS F
@@ -37,7 +37,7 @@
            BLOCK  CONTAINS 100 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS INREC2.
-       01  INREC2                 PIC X(8).
+       01  INREC2                PIC X(8).
 
        FD  OUTFILE
            RECORDING MODE IS F
@@ -45,44 +45,49 @@
            BLOCK  CONTAINS  50 RECORDS
            LABEL RECORDS ARE OMITTED
            DATA RECORD IS OUTREC.
-       01  OUTREC                 PIC X(16).
+       01  OUTREC                PIC X(16).
 
 
        WORKING-STORAGE SECTION.
       *------------------------*
        01  SW-SWITCHES.
-           05 END-OF-FILE-IND     PIC X VALUE SPACE.
-              88 SW-END-OF-FILE         VALUE 'Y'.
+           05 END-OF-FILE-IND    PIC X     VALUE SPACE.
+              88 SW-END-OF-FILE            VALUE 'Y'.
 
        01  SC-VARIABLES.
            05 SC-JOINED-RECORD.
-              10 SC-1ST-HALF      PIC X(8).
-              10 SC-2ND-HALF      PIC X(8).
+              10 SC-1ST-HALF     PIC X(8).
+              10 SC-2ND-HALF     PIC X(8).
 
 
        PROCEDURE DIVISION.
       *-------------------*
        00-MAINLINE.
            PERFORM 10-SETUP THROUGH 10-EXIT
-           PERFORM 20-LOOP  THROUGH 20-EXIT
+           PERFORM 20-LOOP THROUGH 20-EXIT
               UNTIL SW-END-OF-FILE.
            PERFORM 30-FINISH.
 
       *                          ANS COBOL (1972) NO FILE STATUS.
        10-SETUP.
-           OPEN INPUT  INFILE1 INFILE2
+           OPEN INPUT INFILE1 INFILE2
            OPEN OUTPUT OUTFILE
-           READ INFILE1 INTO SC-1ST-HALF AT END PERFORM 30-FINISH.
-           READ INFILE2 INTO SC-2ND-HALF AT END PERFORM 30-FINISH.
+           READ INFILE1 INTO SC-1ST-HALF
+           AT END
+              PERFORM 30-FINISH.
+           READ INFILE2 INTO SC-2ND-HALF
+           AT END
+              PERFORM 30-FINISH.
 
        10-EXIT.
            EXIT.
 
 
        20-LOOP.
-           WRITE OUTREC  FROM SC-JOINED-RECORD
-           READ  INFILE2 INTO SC-2ND-HALF
-              AT END MOVE 'Y' TO END-OF-FILE-IND.
+           WRITE OUTREC FROM SC-JOINED-RECORD
+           READ INFILE2 INTO SC-2ND-HALF
+           AT END
+              MOVE 'Y' TO END-OF-FILE-IND.
 
        20-EXIT.
            EXIT.
@@ -90,4 +95,4 @@
       *                         typical housekeeping.
        30-FINISH.
            CLOSE INFILE1 INFILE2 OUTFILE
-           STOP RUN.
+           GOBACK.

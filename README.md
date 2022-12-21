@@ -6,5 +6,3 @@ Written to address my answer to https://stackoverflow.com/q/72174841/1734032.
 Developed in TK4- (8) under Hercules running on an Optiplex790 USFF.
 
 https://wotho.ethz.ch/tk4-/
-
-JCL pending.
